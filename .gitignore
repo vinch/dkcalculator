@@ -1,0 +1,5 @@
+.DS_Store
+.env
+bower_components
+node_modules
+config/keys.yml

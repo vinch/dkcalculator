@@ -1,0 +1,76 @@
+!!! 5
+//if lt IE 7
+  html.no-js.lt-ie10.lt-ie9.lt-ie8.lt-ie7(lang='en')
+//if IE 7
+  html.no-js.lt-ie10.lt-ie9.lt-ie8(lang='en')
+//if IE 8
+  html.no-js.lt-ie10.lt-ie9(lang='en')
+//if IE 9
+  html.no-js.lt-ie10(lang='en')
+//[if gt IE 9]><!
+html.no-js(lang='en', ng-app='dkCalculatorApp')
+  //<![endif]
+  
+  head
+    title Is it newsworthy? The ultimate death-kilometer calculator
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+    meta(name='description', content='This is a sarcastic project in response to the way mass media reacted to the recent air disasters (MH17 & AH5017).')
+    != css('main')
+    script(type='text/javascript', src='//use.typekit.net/uiv2tzu.js')
+    script(type='text/javascript').
+      try{Typekit.load();}catch(e){}
+  
+  body(ng-controller='MainController')
+
+    header
+      .holder
+        h1 Is it newsworthy?
+        h2 The ultimate death-kilometer calculator
+
+    #content
+      .holder
+        .form(ng-show='position && !result')
+          .line
+            label(for='howmany') How many deaths?
+            input#howmany(type='text', ng-model='deaths')
+          .line
+            label(for='where') Where did it happen?
+            input#where(type='text', ng-model='place', ng-change='change()')
+            .loading(ng-show='loadingPlace') Loading...
+            ul#places
+              li(ng-repeat='place in places', ng-click='selectPlace(place.place_id, place.description)') {{ place.description }}
+          .line(ng-show='deaths && place && placeData')
+            button(ng-click='calculate()') Calculate
+
+        #position(ng-hide='position')
+          p(ng-hide='error') Retrieving your location...
+          p.error(ng-show='error') Please share your location in order to access the calculator.
+
+        #result(ng-show='result')
+          div(ng-show='result == 1')
+            h3 Don't talk about it!
+            p It happened too far away for your audience to care about it. Nobody gives a sh*t, really!
+          div(ng-show='result == 2')
+            h3 Maybe you should talk about it.
+            p It's maybe important so you should probably talk about it, unless more important events occured. For example: a soccer player bit another soccer player, Kate Middleton announced she's expecting another baby, Apple just released something new, etc.
+          div(ng-show='result == 3')
+            h3 Talk about it!
+            p It's very important. Period.
+          button(ng-click='retry()') Try again
+
+    footer
+      .holder
+        p This is a sarcastic project inspired by the way mass media usually react to disasters.
+          br
+          | It's creepy but this is how journalists actually work, even if most of them are too ashamed to admit it.
+        p Created by 
+          a(href='http://twitter.com/vinchbat') Vinch
+          | .
+
+    script(src='/js/dist/components.min.js')
+    != js('app')
+    != js('controllers')
+    != js('filters')
+    != js('services')

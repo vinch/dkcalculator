@@ -1,0 +1,1 @@
+dkCalculatorAppFilters = angular.module 'dkCalculatorAppFilters', []
